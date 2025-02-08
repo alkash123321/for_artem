@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор Совместимости</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="theme-transition-overlay" id="theme-transition-overlay"></div>
+        <header>
+            <h1>Калькулятор Совместимости</h1>
+            <button id="theme-toggle" aria-label="Переключить тему">
+                <div class="icon-wrapper">
+                    <div class="sun-wrapper">
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <div class="sun-beams"></div>
+                    </div>
+                    <div class="moon-wrapper">
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                        <div class="stars"></div>
+                    </div>
+                </div>
+            </button>
+        </header>
+
+        <div class="content-wrapper">
+            <aside class="ad-sidebar left">
+                <div class="ad-space">
+                    <p>Реклама</p>
+                </div>
+                <div class="ad-space">
+                    <p>Реклама</p>
+                </div>
+            </aside>
+
+            <main>
+                <section id="calculator">
+                    <h2>Рассчитайте вашу совместимость</h2>
+                    <form id="compatibility-form">
+                        <div class="form-group">
+                            <label for="name1">Имя первого человека:</label>
+                            <input type="text" id="name1" name="name1" required>
+                            <span class="error" id="name1-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdate1">Дата рождения первого человека:</label>
+                            <input type="date" id="birthdate1" name="birthdate1" required max="2025-12-31">
+                            <span class="error" id="birthdate1-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="name2">Имя второго человека:</label>
+                            <input type="text" id="name2" name="name2" required>
+                            <span class="error" id="name2-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdate2">Дата рождения второго человека:</label>
+                            <input type="date" id="birthdate2" name="birthdate2" required max="2025-12-31">
+                            <span class="error" id="birthdate2-error"></span>
+                        </div>
+                        <button type="submit">Рассчитать совместимость</button>
+                    </form>
+                </section>
+
+                <section id="result" class="hidden">
+                    <h2>Результат совместимости</h2>
+                    <div class="result-container">
+                        <div class="compatibility-circle">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <text x="18" y="20.35" class="percentage">0%</text>
+                            </svg>
+                        </div>
+                        <p id="compatibility-message"></p>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="ad-sidebar right">
+                <div class="ad-space">
+                    <p>Реклама</p>
+                </div>
+                <div class="ad-space">
+                    <p>Реклама</p>
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Калькулятор Совместимости. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
