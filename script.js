@@ -54,7 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Функциональность калькулятора совместимости
   function calculateCompatibility(name1, birthdate1, name2, birthdate2) {
-    // Улучшенный алгоритм совместимости
+    // Проверка на специальную фразу
+    if (checkSpecialPhrase(name1) || checkSpecialPhrase(name2)) {
+      return 100
+    }
+
+    // Оригинальный алгоритм совместимости
     const nameCompatibility = ((name1.length + name2.length) % 15) * 6
 
     const date1 = new Date(birthdate1)
@@ -67,6 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const totalCompatibility = (nameCompatibility + dateCompatibility + zodiacCompatibility) / 3
     return Math.round(totalCompatibility)
+  }
+
+  function checkSpecialPhrase(name) {
+    const normalizedName = name.toLowerCase().replace(/\s+/g, "").replace(/ё/g, "е")
+    return normalizedName.includes("членволоди")
   }
 
   function getZodiacSign(date) {
@@ -267,7 +277,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getCompatibilityMessage(percentage) {
-    if (percentage >= 80) {
+    if (percentage === 100) {
+      return "Невероятно! У вас идеальная совместимость!"
+    } else if (percentage >= 80) {
       return "Вау! У вас потрясающая совместимость!"
     } else if (percentage >= 60) {
       return "У вас хорошая совместимость. Стоит попробовать!"
