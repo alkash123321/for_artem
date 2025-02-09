@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("theme-toggle")
   const compatibilityForm = document.getElementById("compatibility-form")
   const resultSection = document.getElementById("result")
-  const compatibilityCircle = document.querySelector(".circle")
-  const compatibilityPercentage = document.querySelector(".percentage")
+  const compatibilityCircle = document.querySelector(".main-circle .circle")
+  const compatibilityPercentage = document.querySelector(".main-circle .percentage")
   const compatibilityMessage = document.getElementById("compatibility-message")
   const themeTransitionOverlay = document.getElementById("theme-transition-overlay")
 
@@ -54,12 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Функциональность калькулятора совместимости
   function calculateCompatibility(name1, birthdate1, name2, birthdate2) {
-    // Проверка на специальную фразу
-    if (checkSpecialPhrase(name1) || checkSpecialPhrase(name2)) {
-      return 100
-    }
-
-    // Оригинальный алгоритм совместимости
     const nameCompatibility = ((name1.length + name2.length) % 15) * 6
 
     const date1 = new Date(birthdate1)
@@ -70,13 +64,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const zodiacCompatibility = getZodiacCompatibility(date1, date2)
 
-    const totalCompatibility = (nameCompatibility + dateCompatibility + zodiacCompatibility) / 3
-    return Math.round(totalCompatibility)
-  }
+    const totalCompatibility = Math.round((nameCompatibility + dateCompatibility + zodiacCompatibility) / 3)
 
-  function checkSpecialPhrase(name) {
-    const normalizedName = name.toLowerCase().replace(/\s+/g, "").replace(/ё/g, "е")
-    return normalizedName.includes("членволоди")
+    // Расчет дополнительных процентов совместимости
+    const friendshipCompatibility = Math.round((totalCompatibility + zodiacCompatibility) / 2)
+    const loveCompatibility = Math.round((totalCompatibility + nameCompatibility) / 2)
+    const marriageCompatibility = Math.round((totalCompatibility + dateCompatibility) / 2)
+    const sexualCompatibility = Math.round((zodiacCompatibility + nameCompatibility) / 2)
+    const loyaltyCompatibility = Math.round((dateCompatibility + zodiacCompatibility) / 2)
+
+    return {
+      total: totalCompatibility,
+      friendship: friendshipCompatibility,
+      love: loveCompatibility,
+      marriage: marriageCompatibility,
+      sexual: sexualCompatibility,
+      loyalty: loyaltyCompatibility,
+    }
   }
 
   function getZodiacSign(date) {
@@ -277,9 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getCompatibilityMessage(percentage) {
-    if (percentage === 100) {
-      return "Невероятно! У вас идеальная совместимость!"
-    } else if (percentage >= 80) {
+    if (percentage >= 80) {
       return "Вау! У вас потрясающая совместимость!"
     } else if (percentage >= 60) {
       return "У вас хорошая совместимость. Стоит попробовать!"
@@ -355,10 +357,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const compatibility = calculateCompatibility(name1, birthdate1, name2, birthdate2)
 
-    compatibilityCircle.style.stroke = `hsl(${compatibility * 1.2}, 70%, 50%)`
-    compatibilityCircle.style.strokeDasharray = `${compatibility}, 100`
-    compatibilityPercentage.textContent = `${compatibility}%`
-    compatibilityMessage.textContent = getCompatibilityMessage(compatibility)
+    // Обновление общей совместимости
+    compatibilityCircle.style.stroke = `hsl(${compatibility.total * 1.2}, 70%, 50%)`
+    compatibilityCircle.style.strokeDasharray = `${compatibility.total}, 100`
+    compatibilityPercentage.textContent = `${compatibility.total}%`
+    compatibilityMessage.textContent = getCompatibilityMessage(compatibility.total)
+
+    // Обновление дополнительных процентов совместимости
+    function updateCompatibilityCircle(className, value) {
+      const circle = document.querySelector(`.circle.${className}`)
+      const percentage = circle.nextElementSibling
+      circle.style.strokeDasharray = `${value}, 100`
+      percentage.textContent = `${value}%`
+    }
+
+    updateCompatibilityCircle("friendship", compatibility.friendship)
+    updateCompatibilityCircle("love", compatibility.love)
+    updateCompatibilityCircle("marriage", compatibility.marriage)
+    updateCompatibilityCircle("sexual", compatibility.sexual)
+    updateCompatibilityCircle("loyalty", compatibility.loyalty)
 
     resultSection.classList.remove("hidden")
 
